@@ -21,6 +21,6 @@ jobs:
       - name: Push app to GitHub Packages
         uses: docker/build-push-action@v2
         with:
-          tags: "ghcr.io/hovoh/twitter-api-service:latest"
+          tags: "ghcr.io/hovoh/beacon-feed-service:latest"
           push: true
 
