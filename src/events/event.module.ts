@@ -5,32 +5,24 @@ import { KafkaModule } from '@rob3000/nestjs-kafka';
 import { KafkaConsumerController } from './kafka-consumer.controller';
 import { FeedModule } from '../feed/feed.module';
 import { KAFKA_SERVICE_NAME } from './constants';
+import {
+  EnvironmentModule,
+  EnvironmentService,
+} from '@hovoh/nestjs-environment-module';
+import { IEnv } from '../app.module';
 
 @Global()
 @Module({
   imports: [
     EventEmitterModule.forRoot(),
-    KafkaModule.register([
-      {
-        name: KAFKA_SERVICE_NAME,
-        options: {
-          client: {
-            brokers: ['localhost:9092'],
-          },
-          consumer: {
-            groupId: 'feed-server',
-            allowAutoTopicCreation: true,
-          },
-        },
-      },
-    ]),
-    /*KafkaModule.registerAsync([KAFKA_SERVICE_NAME], {
-      useFactory: async () => [
+    KafkaModule.registerAsync([KAFKA_SERVICE_NAME], {
+      imports: [EnvironmentModule],
+      useFactory: async ({ env }: EnvironmentService<IEnv>) => [
         {
           name: KAFKA_SERVICE_NAME,
           options: {
             client: {
-              brokers: ['localhost:9092'],
+              brokers: [env.KAFKA_BROKER],
             },
             consumer: {
               groupId: 'feed-server',
@@ -39,7 +31,8 @@ import { KAFKA_SERVICE_NAME } from './constants';
           },
         },
       ],
-    }),*/
+      inject: [EnvironmentService],
+    }),
     FeedModule,
   ],
   controllers: [KafkaConsumerController],

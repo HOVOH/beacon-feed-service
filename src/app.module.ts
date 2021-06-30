@@ -17,6 +17,7 @@ export interface IEnv {
   DB_NAME: string;
   JWT_SECRET: string;
   JWT_EXPIRES_IN: string;
+  KAFKA_BROKER: string;
 }
 
 @Module({
