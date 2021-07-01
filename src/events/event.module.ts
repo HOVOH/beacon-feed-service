@@ -22,7 +22,7 @@ import { IEnv } from '../app.module';
           name: KAFKA_SERVICE_NAME,
           options: {
             client: {
-              brokers: [env.KAFKA_BROKER],
+              brokers: env.KAFKA_BROKERS.split(','),
             },
             consumer: {
               groupId: 'feed-server',
