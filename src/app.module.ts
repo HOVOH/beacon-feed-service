@@ -1,6 +1,4 @@
 import { Module } from '@nestjs/common';
-import { AppController } from './app.controller';
-import { AppService } from './app.service';
 import { DatabaseModule } from './database.module';
 import { EventModule } from './events/event.module';
 import { APP_PIPE } from '@nestjs/core';
@@ -16,15 +14,14 @@ export interface IEnv {
   DB_PORT: number;
   DB_NAME: string;
   JWT_SECRET: string;
-  JWT_EXPIRES_IN: string;
+  JWT_PUBLIC_CERTIFICATE_PATH: string;
   KAFKA_BROKERS: string;
 }
 
 @Module({
   imports: [DatabaseModule, EventModule, GlobalModule],
-  controllers: [AppController],
+  controllers: [],
   providers: [
-    AppService,
     {
       provide: APP_PIPE,
       useClass: ValidationPipe,

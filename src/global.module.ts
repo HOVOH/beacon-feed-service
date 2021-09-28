@@ -5,6 +5,7 @@ import {
   EnvironmentService,
 } from '@hovoh/nestjs-environment-module';
 import { IEnv } from './app.module';
+import * as fs from 'fs';
 
 @Global()
 @Module({
@@ -12,8 +13,8 @@ import { IEnv } from './app.module';
     JwtModule.registerAsync({
       imports: [EnvironmentModule],
       useFactory: ({ env }: EnvironmentService<IEnv>) => ({
-        secret: env.JWT_SECRET,
-        signOptions: { expiresIn: env.JWT_EXPIRES_IN },
+        publicKey: fs.readFileSync(env.JWT_PUBLIC_CERTIFICATE_PATH),
+        verifyOptions: { algorithms: ['ES256'] },
       }),
       inject: [EnvironmentService],
     }),
