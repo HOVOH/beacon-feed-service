@@ -29,5 +29,6 @@ export class KafkaConsumerController implements OnModuleInit {
 
   onModuleInit(): any {
     this.client.subscribeToResponseOf(TWITTER_TWEET_KAFKA_EVENT, this);
+    this.client.subscribeToResponseOf(TWITTER_FOLLOWING_KAFKA_EVENT, this);
   }
 }
