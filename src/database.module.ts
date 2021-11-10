@@ -17,6 +17,8 @@ import { IEnv } from './app.module';
           port: env.DB_PORT,
           username: env.DB_USER,
           password: env.DB_PASSWORD,
+          database: 'test',
+          authSource: 'admin',
           autoLoadEntities: true,
           logging: true,
           useUnifiedTopology: true,
